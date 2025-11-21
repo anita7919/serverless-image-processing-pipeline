@@ -39,7 +39,7 @@ It then:
 
 Step Functions State Machine
 The state machine:
--Calls the ImageResizeFunction2 Lambda (ResizeImage state)
+-Calls the ImageResizeFunction Lambda (ResizeImage state)
 -Reads the status field from the Lambda response
 -If status == "SUCCESS", goes to SuccessState
 -Otherwise, goes to FailState
@@ -57,11 +57,14 @@ Route:
 -Path: /resized
 -Integration: AWS Step Functions - StartExecution of the state machine
 Request Body:
-  "bucket": "original-images-demo1",
+  "bucket": "original-images-demo2",
   "fileName": "ThinkingCatMeme.jpg",
-  "resizedBucket": "resized-images-demo1"
+  "resizedBucket": "resized-images-demo2"
 }
-
+When called, this endpoint:
+-Starts the Step Functions execution
+-Step Functions invokes the Lambda
+-Lambda resizes the image and writes the thumbnail to S3
 
 How To Run/Create This Project
 Prerequisites
@@ -146,52 +149,4 @@ Copy the Invoke URL from the Stage $default: https://v7k5zivwo1.execute-api.us-e
 Expected:
 HTTP 200 with an executionArn and startDate
 A new file thumbnail-ThinkingCatMeme.jpg appears in resized-images-demo2
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-When called, this endpoint:
-Starts the Step Functions execution
-Step Functions invokes the Lambda
-Lambda resizes the image and writes the thumbnail to S3
 
