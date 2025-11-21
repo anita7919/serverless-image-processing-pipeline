@@ -1,0 +1,30 @@
+	{
+	  "StartAt": "ResizeImage",
+	  "States": {
+	    "ResizeImage": {
+	      "Type": "Task",
+	      "Resource": "arn:aws:lambda:us-east-1:691595239594:function:ImageResizeFunction2",
+	      "Next": "CheckStatus"
+	    },
+	    "CheckStatus": {
+	      "Type": "Choice",
+	      "Choices": [
+	        {
+	          "Variable": "$.status",
+	          "StringEquals": "SUCCESS",
+	          "Next": "SuccessState"
+	        }
+	      ],
+	      "Default": "FailState"
+	    },
+	    "SuccessState": {
+	      "Type": "Succeed"
+	    },
+	    "FailState": {
+	      "Type": "Fail",
+	      "Cause": "ResizeFailed",
+	      "Error": "Image resizing failed"
+	    }
+	  }
+	}
+
