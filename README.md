@@ -98,9 +98,9 @@ For the demo, AmazonS3FullAccess was used and works, but in production you would
 
 Test Locally with this event:
 {
-"bucket": "original-images-demo1",
+"bucket": "original-images-demo2",
   "fileName": "ThinkingCatMeme.jpg",
-  "resizedBucket": "resized-images-demo1"
+  "resizedBucket": "resized-images-demo2"
 }
 You should see: 
 {
@@ -112,21 +112,21 @@ You should see:
 Go to Step Functions: Create state machine
 Choose: Author with code snippets
 Choose type: Standard
-Paste the JSON from stepfunctions/image_processingstatemachine.json
+Paste the JSON from stepfunctions/image_processing_state_machine.json
 Make sure the Resource ARN matches your Lambda ARN
 Create the state machine
 Test with Start Execution and input:
 {
-"bucket": "original-images-demo1",
+"bucket": "original-images-demo2",
   "fileName": "ThinkingCatMeme.jpg",
-  "resizedBucket": "resized-images-demo1"
+  "resizedBucket": "resized-images-demo2"
 }
 
 
 
 4. Create HTTP API (API Gateway)
 Go to API Gateway: HTTP APIs-Create
-Name: ImageResizeAPIDemo
+Name: ImageResizeAPI
 After creation, go to Routes
 Create route: POST /resized
 Select the route: Create and attach integration
@@ -142,9 +142,9 @@ Copy the Invoke URL from the Stage $default: https://v7k5zivwo1.execute-api.us-e
    POST to: https://v7k5zivwo1.execute-api.us-east-1.amazonaws.com/resized
    Body (JSON):
    {
-"bucket": "original-images-demo1",
+"bucket": "original-images-demo2",
   "fileName": "ThinkingCatMeme.jpg",
-  "resizedBucket": "resized-images-demo1"
+  "resizedBucket": "resized-images-demo2"
 }
 Expected:
 HTTP 200 with an executionArn and startDate
